@@ -1,0 +1,179 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=no">
+<meta name="theme-color" content="#1F3A5F">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; media-src 'self' blob:; font-src 'self'; connect-src 'self'; worker-src 'self'; manifest-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
+<meta name="referrer" content="no-referrer">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Stella">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icons/icon-192.png">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<title>Stella</title>
+<style>
+@font-face{font-family:"Plus Jakarta Sans";font-weight:400;font-display:swap;src:url(fonts/plus-jakarta-sans-latin-400-normal.woff2) format("woff2")}
+@font-face{font-family:"Plus Jakarta Sans";font-weight:600;font-display:swap;src:url(fonts/plus-jakarta-sans-latin-600-normal.woff2) format("woff2")}
+@font-face{font-family:"Plus Jakarta Sans";font-weight:700;font-display:swap;src:url(fonts/plus-jakarta-sans-latin-700-normal.woff2) format("woff2")}
+@font-face{font-family:"Baloo 2";font-weight:800;font-display:swap;src:url(fonts/baloo-2-latin-800-normal.woff2) format("woff2")}
+@font-face{font-family:"Plus Jakarta Sans";font-weight:800;font-display:swap;src:url(fonts/plus-jakarta-sans-latin-800-normal.woff2) format("woff2")}
+:root{--bg:#F7F5F0;--ink:#1B2430;--muted:#5B6472;--muted2:#4A5361;--line:#E6E1D6;--line2:#D9D2C3;--soft:#F1EDE4;--navy:#1F3A5F;--green:#1F7A4D;--red:#B42318;--red2:#9F1C12;--teal:#13707C;--gold:#E8A317}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;height:100%;overflow:hidden;background:var(--bg);font-family:"Plus Jakarta Sans",system-ui,sans-serif;color:var(--ink);-webkit-user-select:none;user-select:none;touch-action:manipulation}
+button{font-family:inherit;cursor:pointer;color:inherit}
+#stage{position:fixed;inset:0;overflow:hidden;background:var(--bg)}
+#app{position:absolute;left:50%;top:50%;width:1194px;height:834px;transform-origin:center center;background:var(--bg);overflow:hidden}
+#screen{position:absolute;inset:0;display:flex;flex-direction:column}
+/* header */
+.hd{height:104px;flex:none;padding:0 28px;display:flex;align-items:center;gap:14px;background:#fff;border-bottom:1px solid var(--line)}
+.brand{display:flex;align-items:center;gap:14px;flex:1}
+.logo{width:60px;height:60px;border-radius:18px;background:var(--navy);display:flex;align-items:center;justify-content:center}
+.bn{font-size:34px;font-weight:800;letter-spacing:-.02em;line-height:1}
+.bs{font-size:15px;font-weight:600;color:var(--muted);margin-top:2px}
+.brand .bubble{flex:none}
+.wm{font-family:"Baloo 2","Plus Jakarta Sans",system-ui,sans-serif;font-weight:800;line-height:.95;display:flex;align-items:baseline;height:58px}
+.wm-s{position:relative;font-size:62px;color:#7DBA98;margin-right:-1px}
+.wm-so{position:absolute;left:-3.5px;top:-3.5px;color:transparent;-webkit-text-stroke:2.4px #23744B}
+.wm-t,.wm-n{color:#13224B;font-size:56px;text-shadow:0px 2.6px 0 #D8D9DF, 1.9px 1.9px 0 #D8D9DF, 2.6px 0px 0 #D8D9DF, 1.9px -1.9px 0 #D8D9DF, 0px -2.6px 0 #D8D9DF, -1.9px -1.9px 0 #D8D9DF, -2.6px 0px 0 #D8D9DF, -1.9px 1.9px 0 #D8D9DF}
+.wm-ell{position:relative;display:inline-flex;align-items:baseline;isolation:isolate;margin-left:2px}
+.wm-blob{position:absolute;left:-6px;right:30px;top:14px;bottom:-8px;z-index:-1;background:#F4B43F;border-radius:52% 48% 46% 54%/58% 50% 50% 42%;transform:rotate(-22deg)}
+.wm-n{letter-spacing:-1px}
+.wm-a{font-size:56px;color:#E8678D;margin-left:1px}
+.hbtn{height:64px;min-width:64px;padding:0 20px;border:2px solid var(--line2);border-radius:18px;background:#fff;font-size:17px;font-weight:700;display:flex;align-items:center;justify-content:center;gap:10px}
+.hbtn.sq{padding:0;width:64px;background:var(--soft);border-color:var(--soft)}
+.hbtn.on{background:#FDF0D5;border-color:var(--gold);color:#7A4B00}
+.primary{height:64px;padding:0 24px;border:0;border-radius:18px;background:var(--navy);color:#fff;font-size:18px;font-weight:700;display:flex;align-items:center;gap:10px}
+.ttl{display:flex;align-items:center;gap:14px;margin-left:6px;flex:1;min-width:0}
+.ti{width:56px;height:56px;border-radius:999px;display:flex;align-items:center;justify-content:center;flex:none;font-size:22px;font-weight:800}
+.ttl b{display:block;font-size:28px;font-weight:800;line-height:1.1}
+.ttl small{display:block;font-size:16px;font-weight:600;color:var(--muted)}
+.callbtn{position:relative;overflow:hidden;height:64px;padding:0 22px;border:0;border-radius:18px;background:var(--teal);color:#fff;display:flex;align-items:center;gap:12px;touch-action:none}
+.callbtn .fill{position:absolute;left:0;top:0;bottom:0;width:0;background:#0B4F58;transition:width .15s ease-out}
+.callbtn.holding .fill{width:100%;transition:width 1s linear}
+.callbtn svg,.callbtn .cl{position:relative}
+.cl{display:flex;flex-direction:column;align-items:flex-start;line-height:1.1}
+.cl b{font-size:18px;font-weight:800}.cl small{font-size:13px;font-weight:600;opacity:.9}
+/* main */
+.mn{flex:1;min-height:0;padding:20px 28px 0;display:flex;flex-direction:column;gap:16px}
+.prompt{display:flex;align-items:baseline;gap:14px}
+.prompt h1{margin:0;font-size:28px;font-weight:800;letter-spacing:-.01em}
+.prompt span{font-size:18px;font-weight:600;color:var(--muted);flex:1}
+.pill{align-self:center;padding:8px 16px;border-radius:999px;background:#FDF0D5;color:#7A4B00;font-size:15px;font-weight:700}
+.grid{flex:1;min-height:0;display:grid;gap:18px;grid-template-columns:repeat(var(--c),minmax(0,1fr));grid-template-rows:repeat(2,minmax(0,1fr))}
+.tile{border:0;border-radius:28px;background:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;padding:8px;text-align:center}
+.tile.sel{outline:5px solid var(--navy);outline-offset:-5px}
+.tile .ic{width:var(--ic,96px);height:var(--ic,96px);border-radius:999px;display:flex;align-items:center;justify-content:center}
+.lb{display:flex;flex-direction:column;align-items:center;gap:2px}
+.lb b{font-size:var(--lf,26px);font-weight:800;line-height:1.15}
+.lb small{font-size:17px;font-weight:600;color:var(--muted2)}
+.hometile .ic{background:#fff}
+/* answers */
+.ans{height:150px;flex:none;padding:18px 28px 24px;display:grid;grid-template-columns:1fr 1fr 1.25fr;gap:18px}
+.ans button{border:0;border-radius:24px;display:flex;align-items:center;justify-content:center;gap:18px}
+.ans .t{display:flex;flex-direction:column;align-items:flex-start;gap:4px;text-align:left}
+.ans .t b{font-size:40px;font-weight:800;line-height:1}.ans .t small{font-size:18px;font-weight:600}
+.a-ya{background:var(--green);color:#fff}
+.a-no{background:#fff!important;border:4px solid var(--red)!important;color:var(--red)}
+.a-stop{background:var(--red2);color:#fff}
+/* scan */
+.scanning [data-scan]{transition:transform .25s ease,opacity .25s ease}
+.scanning .grid [data-scan]:not(.scan-hi),.scanning .ans [data-scan]:not(.scan-hi),.scanning .faces [data-scan]:not(.scan-hi),.scanning .keys [data-scan]:not(.scan-hi),.scanning .digits [data-scan]:not(.scan-hi),.scanning .chip:not(.scan-hi){transform:scale(.95);opacity:.62}
+.scan-hi{box-shadow:0 0 0 6px var(--gold),0 0 0 12px rgba(232,163,23,.35)!important;position:relative;z-index:3;transform:scale(1.08);opacity:1}
+@media (prefers-reduced-motion:reduce){.scanning [data-scan]{transition:none}}
+#trap{position:absolute;left:0;right:0;top:104px;bottom:0;z-index:5;display:none;border:0;background:transparent;padding:0}
+#trap.on{display:block}
+/* nyeri */
+.card{border-radius:26px;background:#fff;padding:16px 22px 18px;display:flex;flex-direction:column;gap:10px}
+.card h2{margin:0;font-size:22px;font-weight:800}
+.ch{display:flex;align-items:baseline;gap:12px}.ch span{font-size:16px;font-weight:600;color:var(--muted)}
+.faces{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:12px}
+.face{height:168px;border-radius:22px;border:4px solid transparent;background:var(--bg);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px}
+.face.on{border-color:var(--navy);background:#F1F5FA}
+.face b{font-size:28px;font-weight:800;line-height:1}.face small{font-size:15px;font-weight:700;color:#3D4654}
+.chip{border-radius:14px;border:2px solid var(--line);background:var(--bg);font-size:17px;font-weight:700;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px}
+.chip.on{background:var(--navy);border-color:var(--navy);color:#fff}
+.chip small{font-size:14px;font-weight:600;opacity:.85}
+.summary{flex:1;margin-left:12px;height:64px;padding:0 20px;border-radius:18px;background:var(--bg);border:2px dashed var(--line2);display:flex;align-items:center;font-size:19px;font-weight:700;min-width:0;white-space:nowrap;overflow:hidden}
+/* huruf */
+.out{flex:1;min-width:0;border-radius:22px;background:#fff;border:3px solid var(--navy);display:flex;align-items:center;padding:0 26px;font-size:40px;font-weight:800;letter-spacing:.05em;white-space:pre;overflow:hidden}
+.out .ph{font-size:24px;font-weight:600;letter-spacing:0;color:var(--muted)}
+.caret{display:inline-block;width:4px;height:46px;margin-left:4px;border-radius:2px;background:var(--gold);animation:blink 1s steps(1) infinite}
+@keyframes blink{50%{opacity:0}}
+.keys{flex:1;min-height:0;display:grid;grid-template-columns:repeat(7,minmax(0,1fr));grid-template-rows:repeat(4,minmax(0,1fr));gap:10px}
+.key{border:0;border-radius:16px;background:#fff;box-shadow:0 2px 0 #E0D9CB;font-size:32px;font-weight:800}
+.key.space{grid-column:span 2;background:#DFF0F2;color:var(--teal);font-size:20px;box-shadow:0 2px 0 #C3DDE0}
+.digits{height:68px;flex:none;display:grid;grid-template-columns:repeat(10,minmax(0,1fr));gap:10px}
+.digits .key{background:#EFEBE2;box-shadow:none;font-size:28px}
+/* papan */
+.board{position:relative;flex:1;min-width:0;border-radius:24px;background:#fff;border:2px solid var(--line);overflow:hidden}
+.board canvas{display:block;width:100%;height:100%;touch-action:none;cursor:crosshair}
+.hint{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;pointer-events:none;color:#8A8478}
+.hint b{font-size:30px}.hint small{font-size:18px;font-weight:600}
+.tools{width:132px;flex:none;display:flex;flex-direction:column;gap:12px}
+.tools .lab{font-size:15px;font-weight:700;color:var(--muted);text-align:center}
+.tool{height:62px;border-radius:18px;background:#fff;border:4px solid var(--line);display:flex;align-items:center;justify-content:center}
+.tool.on{border-color:var(--navy)}
+/* overlays */
+#call{position:absolute;inset:0;z-index:20;display:none;color:#fff;flex-direction:column;align-items:center;justify-content:center;gap:22px;padding:40px;text-align:center;animation:pulse 2s ease-in-out infinite}
+#call.on{display:flex}
+@keyframes pulse{0%,100%{background:#1F3A5F}50%{background:#2E5F96}}
+.bellwrap{position:relative;width:180px;height:180px}
+.bellwrap .ring{position:absolute;inset:0;border-radius:999px;background:#F2B33D;animation:ring 2s ease-out infinite}
+@keyframes ring{0%{transform:scale(1);opacity:.55}100%{transform:scale(1.9);opacity:0}}
+.bellwrap .core{position:relative;width:180px;height:180px;border-radius:999px;background:#F2B33D;color:var(--navy);display:flex;align-items:center;justify-content:center}
+#call h2{margin:0;font-size:64px;font-weight:800;letter-spacing:-.02em;line-height:1.05}
+#call p{margin:0;font-size:26px;font-weight:600;opacity:.92}
+#call .done{margin-top:18px;height:96px;padding:0 56px;border:0;border-radius:28px;background:#fff;color:var(--navy);font-size:32px;font-weight:800;display:flex;align-items:center;gap:16px}
+#call .note{font-size:17px;opacity:.85}
+#settings{position:absolute;inset:0;z-index:30;display:none;background:rgba(27,36,48,.45);align-items:center;justify-content:center}
+#settings.on{display:flex}
+.sheet{width:620px;border-radius:28px;background:#fff;padding:32px 36px;display:flex;flex-direction:column;gap:22px}
+.sheet h2{margin:0;font-size:30px;font-weight:800}
+.row{display:flex;align-items:center;gap:16px;font-size:19px;font-weight:700}
+.row input[type=range]{flex:1;height:44px;accent-color:var(--navy)}
+.sheet p{margin:0;font-size:16px;line-height:1.5;color:var(--muted2);font-weight:600}
+.btns{display:flex;gap:12px;flex-wrap:wrap}
+.ghost{height:56px;padding:0 22px;border:2px solid var(--line2);border-radius:16px;background:#fff;font-size:17px;font-weight:700}
+#rotate{position:fixed;inset:0;z-index:50;display:none;flex-direction:column;align-items:center;justify-content:center;gap:10px;background:var(--navy);color:#fff;text-align:center;padding:24px}
+#rotate b{font-size:26px}#rotate small{font-size:17px;opacity:.85}
+@media (orientation:portrait) and (max-aspect-ratio:3/4){#rotate{display:flex}}
+.hbtn.on.holding{background:#F7D58A}
+@media (prefers-reduced-motion:reduce){#call,.bellwrap .ring,.caret{animation:none}#call{background:#1F3A5F}}
+button:focus-visible{outline:4px solid var(--gold);outline-offset:2px}
+</style>
+</head>
+<body>
+<div id="stage"><div id="app">
+  <div id="screen"></div>
+  <button id="trap" type="button" aria-label="Mode pindai: ketuk di mana saja untuk memilih yang disorot"></button>
+  <div id="call" role="alertdialog" aria-live="assertive" aria-label="Pasien memanggil perawat">
+    <div class="bellwrap"><span class="ring"></span><span class="core" data-icon="bell96"></span></div>
+    <h2>Pasien memanggil perawat</h2>
+    <p>Patient is calling a nurse</p>
+    <button type="button" class="done" data-action="stopCall"><span data-icon="check40"></span>Perawat sudah datang</button>
+    <p class="note">Panggilan diulang tiap 4–5 detik sampai tombol di atas ditekan</p>
+  </div>
+  <div id="settings" role="dialog" aria-label="Pengaturan">
+    <div class="sheet">
+      <h2>Pengaturan</h2>
+      <div class="row"><span>Kecepatan mode pindai</span><input id="speed" type="range" min="1" max="4" step="0.5"><span id="speedVal" style="width:70px;text-align:right"></span></div>
+      <div class="btns">
+        <button type="button" class="ghost" data-action="testVoice">Tes suara</button>
+        <button type="button" class="ghost" data-action="testBell">Tes bel panggil</button>
+      </div>
+      <p id="voiceInfo"></p>
+      <p id="ver"></p>
+      <p>Rekaman suara dibaca dari folder <b>audio/</b>. Kalimat yang belum ada rekamannya memakai suara bawaan perangkat.</p>
+      <div class="btns"><button type="button" class="primary" data-action="closeSettings">Selesai</button></div>
+    </div>
+  </div>
+</div>
+
+<div id="rotate" role="status"><b>Putar tablet ke posisi mendatar</b><small>Stella dirancang untuk layar landscape</small></div>
+</div>
+<script src="app.js"></script>
+</body>
+</html>

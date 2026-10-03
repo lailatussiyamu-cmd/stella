@@ -1,0 +1,63 @@
+file,layar,teks
+umum_ya,Semua layar,Ya.
+umum_tidak,Semua layar,Tidak.
+umum_stop,Semua layar,Stop. Tolong hentikan.
+umum_panggil,Panggil perawat,"Perawat, tolong ke sini."
+napas_sesak,Pernapasan,Saya sesak napas.
+napas_batuk,Pernapasan,Saya ingin batuk.
+napas_dahak,Pernapasan,Ada dahak.
+napas_suction,Pernapasan,Tolong sedot lendir saya.
+napas_selang,Pernapasan,Selang saya tidak nyaman.
+napas_masker,Pernapasan,Masker saya tidak nyaman.
+kebutuhan_haus,Kebutuhan,Saya haus.
+kebutuhan_lapar,Kebutuhan,Saya lapar.
+kebutuhan_mulut,Kebutuhan,Mulut saya kering.
+kebutuhan_mual,Kebutuhan,Saya mual.
+kebutuhan_bak,Kebutuhan,Saya ingin buang air kecil.
+kebutuhan_bab,Kebutuhan,Saya ingin buang air besar.
+kebutuhan_dingin,Kebutuhan,Saya kedinginan.
+kebutuhan_panas,Kebutuhan,Saya kepanasan.
+nyaman_posisi,Kenyamanan,Saya ingin ganti posisi.
+nyaman_bantal,Kenyamanan,Tolong atur bantal saya.
+nyaman_selimut,Kenyamanan,Tolong atur selimut saya.
+nyaman_gatal,Kenyamanan,Saya gatal.
+nyaman_terang,Kenyamanan,Lampunya terlalu terang.
+nyaman_bising,Kenyamanan,Terlalu bising.
+nyaman_tidur,Kenyamanan,Saya ingin tidur.
+nyaman_ikatan,Kenyamanan,Ikatan tangan saya terlalu kencang.
+rasa_takut,Perasaan,Saya takut.
+rasa_cemas,Perasaan,Saya cemas.
+rasa_sedih,Perasaan,Saya sedih.
+rasa_marah,Perasaan,Saya marah.
+rasa_bingung,Perasaan,Saya bingung.
+rasa_sepi,Perasaan,Saya merasa kesepian.
+rasa_tenang,Perasaan,Saya merasa tenang.
+rasa_senang,Perasaan,Saya senang.
+keluarga_ibu,Keluarga,Saya ingin bertemu ibu.
+keluarga_ayah,Keluarga,Saya ingin bertemu ayah.
+keluarga_pasangan,Keluarga,Saya ingin bertemu suami atau istri saya.
+keluarga_anak,Keluarga,Saya ingin bertemu anak atau saudara saya.
+keluarga_perawat,Keluarga,Tolong panggil perawat.
+keluarga_dokter,Keluarga,Saya ingin bicara dengan dokter.
+keluarga_temui,Keluarga,Saya ingin ditemani keluarga.
+keluarga_telepon,Keluarga,Tolong telepon keluarga saya.
+nyeri_0,Nyeri (skala),Saya tidak merasa sakit.
+nyeri_2,Nyeri (skala),Saya merasa nyeri dua.
+nyeri_4,Nyeri (skala),Saya merasa nyeri empat.
+nyeri_6,Nyeri (skala),Saya merasa nyeri enam.
+nyeri_8,Nyeri (skala),Saya merasa nyeri delapan.
+nyeri_10,Nyeri (skala),Saya merasa nyeri sepuluh. Sakit sekali.
+lokasi_kepala,Nyeri (lokasi),di kepala.
+lokasi_leher,Nyeri (lokasi),di leher.
+lokasi_dada,Nyeri (lokasi),di dada.
+lokasi_perut,Nyeri (lokasi),di perut.
+lokasi_punggung,Nyeri (lokasi),di punggung.
+lokasi_lengan,Nyeri (lokasi),di lengan.
+lokasi_kaki,Nyeri (lokasi),di kaki.
+lokasi_luka,Nyeri (lokasi),di luka operasi.
+jenis_tajam,Nyeri (rasanya),rasanya tajam.
+jenis_terbakar,Nyeri (rasanya),rasanya seperti terbakar.
+jenis_berdenyut,Nyeri (rasanya),rasanya berdenyut.
+jenis_tertekan,Nyeri (rasanya),rasanya seperti ditekan.
+jenis_kram,Nyeri (rasanya),rasanya kram.
+jenis_perih,Nyeri (rasanya),rasanya perih.
