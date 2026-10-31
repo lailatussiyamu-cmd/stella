@@ -1,6 +1,6 @@
 (() => {
 'use strict';
-const VERSION = '1.5';
+const VERSION = '1.6';
 
 /* ---------- ikon (garis) ---------- */
 const P = {
@@ -154,17 +154,6 @@ MOODS.forEach((m) => { PH[m[0]] = m[3]; });
 PAIN.forEach((p) => { PH['nyeri_' + p[0]] = PAIN_TXT[p[0]]; });
 PLACES.forEach((p) => { PH['lokasi_' + p[0]] = 'di ' + p[1].toLowerCase() + '.'; });
 KINDS.forEach((k) => { PH['jenis_' + k[0]] = k[3]; });
-// Nama huruf & angka dalam bahasa Indonesia (rekaman: huruf_a … huruf_z, angka_0 … angka_9).
-const LETTER_NAMES = 'a be ce de e ef ge ha i je ka el em en o pe ki er es te u ve we eks ye zet'.split(' ');
-const DIGIT_NAMES = 'nol satu dua tiga empat lima enam tujuh delapan sembilan'.split(' ');
-LETTER_NAMES.forEach((n, i) => { PH['huruf_' + String.fromCharCode(97 + i)] = n + '.'; });
-DIGIT_NAMES.forEach((n, i) => { PH['angka_' + i] = n + '.'; });
-function charKey(c) {
-  const l = c.toLowerCase();
-  if (l >= 'a' && l <= 'z') return 'huruf_' + l;
-  if (c >= '0' && c <= '9') return 'angka_' + c;
-  return null;
-}
 
 /* ---------- penyimpanan ---------- */
 const store = {
@@ -581,11 +570,7 @@ app.addEventListener('click', (e) => {
   if (d.level !== undefined) { S.pain.level = +d.level; render(); return say('nyeri_' + d.level); }
   if (d.place) { S.pain.place = d.place; render(); return say('lokasi_' + d.place); }
   if (d.kind) { S.pain.kind = d.kind; render(); return say('jenis_' + d.kind); }
-  if (d.key !== undefined) {
-    S.text = (S.text + d.key).slice(0, 40); updateOut();
-    const k = charKey(d.key); if (k) say(k);
-    return;
-  }
+  if (d.key !== undefined) { S.text = (S.text + d.key).slice(0, 40); return updateOut(); }
   if (d.color) { S.pen.color = d.color; screen.querySelectorAll('[data-color]').forEach((x) => x.classList.toggle('on', x === b)); return; }
   if (d.size) { S.pen.size = +d.size; screen.querySelectorAll('[data-size]').forEach((x) => x.classList.toggle('on', x === b)); return; }
   switch (d.action) {
@@ -593,12 +578,7 @@ app.addEventListener('click', (e) => {
     case 'speakPain': say(['nyeri_' + S.pain.level, 'lokasi_' + S.pain.place, 'jenis_' + S.pain.kind]); break;
     case 'bksp': S.text = S.text.slice(0, -1); updateOut(); break;
     case 'clearText': S.text = ''; updateOut(); break;
-    case 'speakText':
-      if (!S.text.trim()) break;
-      // HP punya suara Indonesia → kata utuh dibaca HP. Tidak punya → dieja pakai rekaman huruf/angka.
-      if (pickVoice()) { token++; stopSound(); tts(S.text.toLowerCase()); }
-      else say(S.text.split('').map(charKey).filter(Boolean));
-      break;
+    case 'speakText': if (S.text.trim()) { token++; stopSound(); tts(S.text.toLowerCase()); } break;
     case 'clearBoard': { const cv = $('#cv'); if (cv) cv.getContext('2d').clearRect(0, 0, cv.width, cv.height); const h = $('#hint'); if (h) h.style.display = ''; break; }
     case 'toggleScan': toggleScan(); break;
     case 'stopCall': stopCall(); break;
@@ -622,7 +602,7 @@ function showVoiceSet() {
 function openSettings() {
   speed.value = S.scanMs / 1000; showSpeed(); showVoiceSet();
   const v = pickVoice();
-  $('#voiceInfo').textContent = (v ? 'Tombol huruf & angka memakai rekaman. Kata yang diketik lalu diucapkan dibaca suara bawaan perangkat: ' + v.name + '.' : 'Perangkat ini belum punya suara bahasa Indonesia, jadi kata yang diketik akan dieja huruf per huruf. Unduh suara Indonesia di pengaturan Text-to-Speech perangkat supaya kata dibaca utuh.');
+  $('#voiceInfo').textContent = (v ? 'Kata yang diketik di layar Huruf & Angka dibaca suara bawaan perangkat: ' + v.name + '.' : 'Perangkat ini belum punya suara bahasa Indonesia untuk membaca kata yang diketik. Unduh di pengaturan Text-to-Speech perangkat supaya suaranya tidak beraksen Inggris.');
   $('#ver').textContent = 'Stella versi ' + VERSION + (navigator.serviceWorker && navigator.serviceWorker.controller ? ' · siap dipakai offline' : ' · mode offline belum aktif');
   $('#settings').classList.add('on');
 }

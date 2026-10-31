@@ -11,7 +11,5 @@ self.STELLA_AUDIO = [
   'keluarga_ibu', 'keluarga_ayah', 'keluarga_pasangan', 'keluarga_anak', 'keluarga_perawat', 'keluarga_dokter', 'keluarga_temui', 'keluarga_telepon',
   'nyeri_0', 'nyeri_2', 'nyeri_4', 'nyeri_6', 'nyeri_8', 'nyeri_10',
   'lokasi_kepala', 'lokasi_leher', 'lokasi_dada', 'lokasi_perut', 'lokasi_punggung', 'lokasi_lengan', 'lokasi_kaki', 'lokasi_luka',
-  'jenis_tajam', 'jenis_terbakar', 'jenis_berdenyut', 'jenis_tertekan', 'jenis_kram', 'jenis_perih',
-  'huruf_a', 'huruf_b', 'huruf_c', 'huruf_d', 'huruf_e', 'huruf_f', 'huruf_g', 'huruf_h', 'huruf_i', 'huruf_j', 'huruf_k', 'huruf_l', 'huruf_m', 'huruf_n', 'huruf_o', 'huruf_p', 'huruf_q', 'huruf_r', 'huruf_s', 'huruf_t', 'huruf_u', 'huruf_v', 'huruf_w', 'huruf_x', 'huruf_y', 'huruf_z',
-  'angka_0', 'angka_1', 'angka_2', 'angka_3', 'angka_4', 'angka_5', 'angka_6', 'angka_7', 'angka_8', 'angka_9'
+  'jenis_tajam', 'jenis_terbakar', 'jenis_berdenyut', 'jenis_tertekan', 'jenis_kram', 'jenis_perih'
 ];
