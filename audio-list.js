@@ -1,5 +1,7 @@
-// Daftar file suara yang dicari Stella di folder audio/ (nama file = kode + ".mp3").
-// File yang belum ada otomatis diganti suara bawaan perangkat.
+// Daftar file suara yang dicari Stella di folder audio/<suara>/ (nama file = kode + ".mp3").
+// Rekaman dibuat dengan ElevenLabs: perempuan = Nesah Paramitha, laki = Akram (model eleven_v4).
+// File yang belum ada diganti rekaman suara satunya, lalu suara bawaan perangkat.
+self.STELLA_VOICES = ['perempuan', 'laki'];
 self.STELLA_AUDIO = [
   'umum_ya', 'umum_tidak', 'umum_stop', 'umum_panggil',
   'napas_sesak', 'napas_batuk', 'napas_dahak', 'napas_suction', 'napas_selang', 'napas_masker',

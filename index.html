@@ -137,6 +137,7 @@ button{font-family:inherit;cursor:pointer;color:inherit}
 .sheet p{margin:0;font-size:16px;line-height:1.5;color:var(--muted2);font-weight:600}
 .btns{display:flex;gap:12px;flex-wrap:wrap}
 .ghost{height:56px;padding:0 22px;border:2px solid var(--line2);border-radius:16px;background:#fff;font-size:17px;font-weight:700}
+.ghost.sel{background:var(--navy);border-color:var(--navy);color:#fff}
 #rotate{position:fixed;inset:0;z-index:50;display:none;flex-direction:column;align-items:center;justify-content:center;gap:10px;background:var(--navy);color:#fff;text-align:center;padding:24px}
 #rotate b{font-size:26px}#rotate small{font-size:17px;opacity:.85}
 @media (orientation:portrait) and (max-aspect-ratio:3/4){#rotate{display:flex}}
@@ -159,6 +160,12 @@ button:focus-visible{outline:4px solid var(--gold);outline-offset:2px}
   <div id="settings" role="dialog" aria-label="Pengaturan">
     <div class="sheet">
       <h2>Pengaturan</h2>
+      <div class="row"><span>Suara pasien</span>
+        <div class="btns">
+          <button type="button" class="ghost" data-action="setVoice" data-v="perempuan" aria-pressed="false">Perempuan</button>
+          <button type="button" class="ghost" data-action="setVoice" data-v="laki" aria-pressed="false">Laki-laki</button>
+        </div>
+      </div>
       <div class="row"><span>Kecepatan mode pindai</span><input id="speed" type="range" min="1" max="4" step="0.5"><span id="speedVal" style="width:70px;text-align:right"></span></div>
       <div class="btns">
         <button type="button" class="ghost" data-action="testVoice">Tes suara</button>
@@ -166,7 +173,7 @@ button:focus-visible{outline:4px solid var(--gold);outline-offset:2px}
       </div>
       <p id="voiceInfo"></p>
       <p id="ver"></p>
-      <p>Rekaman suara dibaca dari folder <b>audio/</b>. Kalimat yang belum ada rekamannya memakai suara bawaan perangkat.</p>
+      <p>Kalimat diputar dari rekaman suara (folder <b>audio/perempuan</b> dan <b>audio/laki</b>), jadi tetap jalan tanpa internet. Kalimat yang belum direkam dengan suara pilihan memakai rekaman suara satunya.</p>
       <div class="btns"><button type="button" class="primary" data-action="closeSettings">Selesai</button></div>
     </div>
   </div>

@@ -1,6 +1,6 @@
 (() => {
 'use strict';
-const VERSION = '1.3';
+const VERSION = '1.4';
 
 /* ---------- ikon (garis) ---------- */
 const P = {
@@ -165,6 +165,7 @@ const store = {
 const S = {
   screen: 'home', sel: null, last: null,
   scanning: false, scanMs: store.get('scanMs', 2000),
+  voiceSet: store.get('voiceSet', 'perempuan') === 'laki' ? 'laki' : 'perempuan',
   pain: { level: 6, place: 'perut', kind: 'berdenyut' },
   text: '', pen: { color: '#1B2430', size: 6 }, drew: false,
   calling: false
@@ -203,21 +204,37 @@ function stopSound() {
   try { speechSynthesis.cancel(); } catch (e) {}
   if (pending) { const p = pending; pending = null; p(); }
 }
+// Urutan suara: rekaman suara pilihan → rekaman suara satunya → suara bawaan perangkat.
+function audioSources(key) {
+  const other = S.voiceSet === 'laki' ? 'perempuan' : 'laki';
+  return [S.voiceSet, other].map((v) => 'audio/' + v + '/' + key + '.mp3').filter((u) => !missing.has(u));
+}
 function playKey(key, my) {
   const text = PH[key] || '';
   return new Promise((res) => {
     if (my !== undefined && my !== token) return res();
-    let settled = false;
+    let settled = false, attempt = 0;
     const done = () => { if (settled) return; settled = true; pending = null; player.onended = player.onerror = null; res(); };
     const fallback = () => { if (settled) return; settled = true; player.onended = player.onerror = null; pending = res; tts(text).then(() => { if (pending === res) pending = null; res(); }); };
     pending = done;
     try { speechSynthesis.cancel(); } catch (e) {}
-    if (missing.has(key)) return fallback();
-    player.onended = done;
-    player.onerror = () => { missing.add(key); fallback(); };
-    player.src = 'audio/' + key + '.mp3';
-    const p = player.play();
-    if (p && p.catch) p.catch((err) => { if (!err || err.name !== 'AbortError') { if (err && err.name !== 'NotAllowedError') missing.add(key); fallback(); } });
+    const srcs = audioSources(key);
+    const tryNext = (i) => {
+      if (settled) return;
+      if (i >= srcs.length) return fallback();
+      const cur = ++attempt, url = srcs[i];
+      const fail = () => { if (cur !== attempt || settled) return; missing.add(url); tryNext(i + 1); };
+      player.onended = done;
+      player.onerror = fail;
+      player.src = url;
+      const p = player.play();
+      if (p && p.catch) p.catch((err) => {
+        if (cur !== attempt || settled || (err && err.name === 'AbortError')) return;
+        if (err && err.name === 'NotAllowedError') return fallback();
+        fail();
+      });
+    };
+    tryNext(0);
   });
 }
 async function say(keys) {
@@ -567,6 +584,7 @@ app.addEventListener('click', (e) => {
     case 'stopCall': stopCall(); break;
     case 'settings': openSettings(); break;
     case 'closeSettings': $('#settings').classList.remove('on'); break;
+    case 'setVoice': S.voiceSet = d.v === 'laki' ? 'laki' : 'perempuan'; store.set('voiceSet', S.voiceSet); showVoiceSet(); say('umum_ya'); break;
     case 'testVoice': say('umum_ya'); break;
     case 'testBell': bell(); break;
   }
@@ -575,10 +593,16 @@ app.addEventListener('click', (e) => {
 /* ---------- pengaturan ---------- */
 const speed = $('#speed'), speedVal = $('#speedVal');
 function showSpeed() { speedVal.textContent = (S.scanMs / 1000).toString().replace('.', ',') + ' dtk'; }
+function showVoiceSet() {
+  document.querySelectorAll('[data-action="setVoice"]').forEach((x) => {
+    const on = x.dataset.v === S.voiceSet;
+    x.classList.toggle('sel', on); x.setAttribute('aria-pressed', on ? 'true' : 'false');
+  });
+}
 function openSettings() {
-  speed.value = S.scanMs / 1000; showSpeed();
+  speed.value = S.scanMs / 1000; showSpeed(); showVoiceSet();
   const v = pickVoice();
-  $('#voiceInfo').textContent = v ? 'Suara bawaan yang dipakai: ' + v.name + '.' : 'Perangkat ini belum punya suara bahasa Indonesia. Unduh di pengaturan Text-to-Speech perangkat supaya suaranya tidak beraksen Inggris.';
+  $('#voiceInfo').textContent = (v ? 'Huruf yang diketik dibacakan dengan suara bawaan perangkat: ' + v.name + '.' : 'Perangkat ini belum punya suara bahasa Indonesia untuk membacakan huruf yang diketik. Unduh di pengaturan Text-to-Speech perangkat supaya suaranya tidak beraksen Inggris.');
   $('#ver').textContent = 'Stella versi ' + VERSION + (navigator.serviceWorker && navigator.serviceWorker.controller ? ' · siap dipakai offline' : ' · mode offline belum aktif');
   $('#settings').classList.add('on');
 }

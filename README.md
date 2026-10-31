@@ -13,7 +13,8 @@ Stella adalah papan komunikasi (AAC) untuk pasien ICU dan PICU. Aplikasi ini ber
 | `manifest.webmanifest` | Nama, ikon, dan mode layar penuh saat dipasang |
 | `icons/` | Ikon aplikasi |
 | `fonts/` | Font Plus Jakarta Sans (disimpan lokal, tidak butuh internet) |
-| `audio/` | Tempat file rekaman suara (`.mp3`) |
+| `audio/` | Rekaman suara: `perempuan/` dan `laki/` (`.mp3`) |
+| `alat/potong.py` | Memotong rekaman panjang menjadi file per kalimat |
 
 ## 1. Online-kan sekali (wajib HTTPS)
 
@@ -31,15 +32,23 @@ Membuka file `index.html` langsung dari folder (alamat `file://`) tidak bisa dip
 3. Android: menu ⋮ → *Tambahkan ke layar utama*. iPad: tombol Bagikan → *Tambahkan ke Layar Utama*.
 4. Buka Stella dari ikon di layar utama. Sejak saat itu Stella jalan tanpa internet.
 
-## 3. Menambah atau mengganti suara rekaman
+## 3. Suara rekaman
 
-1. Beri nama file sesuai kolom `file` di `daftar_kalimat.csv`, misalnya `kebutuhan_haus.mp3`.
-2. Taruh semua file di folder `audio/`.
-3. Buka `sw.js`, ganti `const CACHE = 'stella-v1';` menjadi `stella-v2` (naikkan angkanya setiap kali ada perubahan).
-4. Unggah ulang foldernya ke Netlify/GitHub.
-5. Di tablet, buka Stella sekali saat ada internet, tutup, lalu buka lagi.
+Semua kalimat sudah direkam dengan ElevenLabs (model eleven_v4), jadi tidak bergantung pada suara bawaan perangkat:
 
-Kalimat yang belum punya rekaman otomatis memakai suara bawaan perangkat.
+- `audio/perempuan/` — suara Nesah Paramitha
+- `audio/laki/` — suara Akram
+
+Pilih suaranya di *Pengaturan → Suara pasien*. Kalau satu kalimat belum ada rekamannya di suara yang dipilih, Stella memakai rekaman suara satunya, lalu suara bawaan perangkat.
+
+Menambah atau mengganti kalimat:
+
+1. Tambahkan barisnya di `daftar_kalimat.csv` dan kodenya di `audio-list.js`.
+2. Rekam di ElevenLabs. Beberapa kalimat bisa digabung dalam satu rekaman dengan pemisah `[long pause]`, lalu dipotong otomatis: `python3 alat/potong.py rekaman.mp3 audio/perempuan kode1,kode2,...`
+3. Buka `sw.js`, naikkan angka `const CACHE = 'stella-v5';` (misalnya ke `stella-v6`).
+4. Unggah ulang ke GitHub. Di tablet, buka Stella sekali saat ada internet, tutup, lalu buka lagi.
+
+Huruf yang diketik di layar Huruf tetap dibacakan suara bawaan perangkat.
 
 ## 4. Pengaturan tablet yang disarankan
 

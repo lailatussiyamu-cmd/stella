@@ -1,7 +1,7 @@
 // Stella — service worker untuk mode offline.
 // PENTING: setiap kali menambah/mengganti file suara atau mengubah aplikasi,
 // naikkan angka versi di bawah ini (misalnya v1 -> v2) supaya tablet mengambil versi baru.
-const CACHE = 'stella-v4';
+const CACHE = 'stella-v5';
 
 importScripts('audio-list.js');
 
@@ -27,8 +27,9 @@ self.addEventListener('install', (event) => {
     const cache = await caches.open(CACHE);
     await cache.addAll(CORE);
     // File suara: simpan yang ada saja, yang belum ada dilewati.
-    await Promise.all((self.STELLA_AUDIO || []).map(async (key) => {
-      const url = 'audio/' + key + '.mp3';
+    const urls = [];
+    (self.STELLA_AUDIO || []).forEach((key) => (self.STELLA_VOICES || []).forEach((v) => urls.push('audio/' + v + '/' + key + '.mp3')));
+    await Promise.all(urls.map(async (url) => {
       try {
         const res = await fetch(url, { cache: 'no-cache' });
         if (res.ok) await cache.put(url, res);
