@@ -45,7 +45,7 @@ Menambah atau mengganti kalimat:
 
 1. Tambahkan barisnya di `daftar_kalimat.csv` dan kodenya di `audio-list.js`.
 2. Rekam di ElevenLabs. Beberapa kalimat bisa digabung dalam satu rekaman dengan pemisah `[long pause]`, lalu dipotong otomatis: `python3 alat/potong.py rekaman.mp3 audio/perempuan kode1,kode2,...`
-3. Buka `sw.js`, naikkan angka `const CACHE = 'stella-v7';` (misalnya ke `stella-v8`).
+3. Buka `sw.js`, naikkan angka `const CACHE = 'stella-v8';` (misalnya ke `stella-v9`).
 4. Unggah ulang ke GitHub. Di tablet, buka Stella sekali saat ada internet, tutup, lalu buka lagi.
 
 Layar Huruf & Angka: tombol huruf/angka tidak bersuara. Tombol *Ucapkan* membaca kata yang diketik dengan suara bawaan perangkat (Google), karena kata bebas tidak bisa direkam sebelumnya.
