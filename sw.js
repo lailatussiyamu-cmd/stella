@@ -1,7 +1,7 @@
 // Stella — service worker untuk mode offline.
 // PENTING: setiap kali menambah/mengganti file suara atau mengubah aplikasi,
 // naikkan angka versi di bawah ini (misalnya v1 -> v2) supaya tablet mengambil versi baru.
-const CACHE = 'stella-v5';
+const CACHE = 'stella-v6';
 
 importScripts('audio-list.js');
 

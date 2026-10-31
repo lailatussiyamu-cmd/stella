@@ -12,7 +12,7 @@ os.makedirs(outdir, exist_ok=True)
 n = len(keys)
 
 log = subprocess.run(
-    ['ffmpeg', '-hide_banner', '-i', src, '-af', 'silencedetect=noise=-40dB:d=0.25', '-f', 'null', '-'],
+    ['ffmpeg', '-hide_banner', '-i', src, '-af', 'silencedetect=noise=%sdB:d=%s' % (os.environ.get('NOISE', '-40'), os.environ.get('MIN', '0.25')), '-f', 'null', '-'],
     capture_output=True, text=True).stderr
 starts = [float(x) for x in re.findall(r'silence_start: ([\d.]+)', log)]
 ends = [float(x) for x in re.findall(r'silence_end: ([\d.]+)', log)]

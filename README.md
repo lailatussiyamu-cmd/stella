@@ -14,7 +14,7 @@ Stella adalah papan komunikasi (AAC) untuk pasien ICU dan PICU. Aplikasi ini ber
 | `icons/` | Ikon aplikasi |
 | `fonts/` | Font Plus Jakarta Sans (disimpan lokal, tidak butuh internet) |
 | `audio/` | Rekaman suara: `perempuan/` dan `laki/` (`.mp3`) |
-| `alat/potong.py` | Memotong rekaman panjang menjadi file per kalimat |
+| `alat/potong.py`, `alat/potong_waktu.py` | Memotong rekaman panjang menjadi file per kalimat / per kata |
 
 ## 1. Online-kan sekali (wajib HTTPS)
 
@@ -45,10 +45,12 @@ Menambah atau mengganti kalimat:
 
 1. Tambahkan barisnya di `daftar_kalimat.csv` dan kodenya di `audio-list.js`.
 2. Rekam di ElevenLabs. Beberapa kalimat bisa digabung dalam satu rekaman dengan pemisah `[long pause]`, lalu dipotong otomatis: `python3 alat/potong.py rekaman.mp3 audio/perempuan kode1,kode2,...`
-3. Buka `sw.js`, naikkan angka `const CACHE = 'stella-v5';` (misalnya ke `stella-v6`).
+3. Buka `sw.js`, naikkan angka `const CACHE = 'stella-v6';` (misalnya ke `stella-v7`).
 4. Unggah ulang ke GitHub. Di tablet, buka Stella sekali saat ada internet, tutup, lalu buka lagi.
 
-Huruf yang diketik di layar Huruf tetap dibacakan suara bawaan perangkat.
+Layar Huruf & Angka: tiap tombol huruf/angka berbunyi dari rekaman (`huruf_a` … `huruf_z`, `angka_0` … `angka_9`). Tombol *Ucapkan* membaca kata utuh dengan suara bawaan perangkat; kalau perangkat tidak punya suara bahasa Indonesia, kata dieja huruf per huruf dari rekaman.
+
+Untuk rekaman kata-kata pendek (huruf/angka) yang jedanya terlalu rapat, potong berdasarkan transkrip ElevenLabs: `python3 alat/potong_waktu.py rekaman.mp3 audio/laki kode1,... mulai1,...`
 
 ## 4. Pengaturan tablet yang disarankan
 
